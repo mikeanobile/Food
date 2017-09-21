@@ -1,0 +1,366 @@
+<md-toolbar flex>
+  <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+    <md-button class="md-icon-button" aria-label="Menu" ng-click="main.toggle()">
+      <md-icon>menu</md-icon>
+    </md-button>
+    <p>FOOD!</p>
+    <div style="width: 40px; height: 40px;"></div>
+  </div>
+</md-toolbar>
+
+<md-sidenav class="md-sidenav-left" md-component-id="left">
+  <md-toolbar>
+    <h1 class="md-toolbar-tools">Settings</h1>
+  </md-toolbar>
+  <md-list ng-cloak>
+    <md-list-item >
+      <md-icon style="padding-right: 16px; color: #000000">school</md-icon>
+      <p>Info</p>
+    </md-list-item>
+    <md-list-item>
+   
+      <md-slider-container>
+	  <md-input-container>
+        <input flex type="number" ng-value="2000" ng-model="dailycalories" aria-label="calories" aria-controls="calories-slider">
+      </md-input-container>
+      <span>Calories </span>
+      <md-slider flex min="1500" max="3000" ng-model="dailycalories" aria-label="calories" id="calories-slider">
+      </md-slider>
+      
+    </md-slider-container>
+    </md-list-item>
+  </md-list>
+</md-sidenav>
+
+
+
+<div layout="column" layout-align="center center" flex>
+<md-content class="md-padding">
+      <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+        <md-input-container flex>
+          <label>Search Foods</label>
+          <input type="text" ng-model="search" id="search" ng-change="getProducts(search)"/ >
+        </md-input-container>
+		
+		<!--md-button class="md-raised" ng-click="getProducts()">Search</md-button-->
+      </section>
+	<div>
+<md-list style="overflow-y: scroll;max-height:500px;min-height:250px;">
+        <md-subheader class="md-no-sticky">Search results (showing {{ totalItems}}):</md-subheader>
+        <md-list-item class="md-3-line" ng-repeat="food in foods" ng-click="null" >
+           <md-card md-theme="dark-grey" md-theme-watch>
+		      <div id="nutritionfacts">
+        <table width="242" cellspacing="0" cellpadding="0">
+            <tbody><tr>
+                <td align="center" class="header">{{food.Name}}</td>
+            </tr>
+            <tr>
+                <td><div class="serving">Per <span class="highlighted">{{food.Serving_g}}g</span> Serving Size</div></td>
+            </tr>
+            <tr style="height: 7px">
+                <td bgcolor="#000000"></td>
+            </tr>
+            <tr>
+                <td style="font-size: 7pt"><div class="line">Amount Per Serving</div></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="line">
+                    <div class="label">Calories <div class="weight">{{food.Calories}}</div></div><div style="padding-top: 1px; float: right;" class="labellight">Calories from fat <div class="weight">{{food.Fat_g * 9}}</div></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><div class="line"><div class="dvlabel">% Daily Value<sup>*</sup></div></div></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="line">
+                    <div class="label">Total Fat <div class="weight">{{food.Fat_g}}g</div></div>
+                    <div class="dv">{{food.Fat_g * 9 / dailycalories * 100 }}%</div>
+                    </div>
+                </td>
+            </tr>
+                        <tr>
+                <td class="indent">
+                    <div class="line">
+                    <div class="labellight">Saturated Fat <div class="weight">{{food.Sat_Fat_g}}g</div></div>
+                    <div class="dv"></div>
+                    </div>
+                </td>
+            </tr>
+         <!--               <tr>
+                <td class="indent">
+                    <div class="line">
+                    <div class="labellight"><i>Trans</i> Fat <div class="weight">g</div></div>
+                    </div>
+                </td>
+            </tr> -->
+                        <tr>
+                <td>
+                    <div class="line">
+                    <div class="label">Cholesterol <div class="weight">{{food.Cholesterol_mg}}mg</div></div>
+                    <div class="dv"></div>
+                    </div>
+                </td>
+            </tr>
+       <!--                 <tr>
+                <td>
+                    <div class="line">
+                    <div class="label">Sodium <div class="weight">mg</div></div>
+                    <div class="dv">%</div>
+                    </div>
+                </td>
+            </tr> -->
+                        <tr>
+                <td>
+                    <div class="line">
+                    <div class="label">Total Carbohydrates <div class="weight">{{food.Carbohydrate_g}}g</div></div>
+                    <div class="dv">{{food.Carbohydrate_g * 4 / dailycalories * 100}}%</div>
+                    </div>
+                </td>
+            </tr>
+                        <tr>
+                <td class="indent">
+                    <div class="line">
+                    <div class="labellight">Dietary Fiber <div class="weight">{{food.Fiber_g}}g</div></div>
+                    <div class="dv"></div>
+                </div></td>
+            </tr>
+                        <tr>
+                <td class="indent">
+                    <div class="line">
+                    <div class="labellight">Sugars <div class="weight">{{food.Sugar_g}}g</div></div>
+                    </div>
+                </td>
+            </tr>
+                        <tr>
+                <td>
+                    <div class="line">
+                    <div class="label">Protein <div class="weight">{{food.Protein_g}}g</div></div>
+					<div class="dv">{{food.Protein_g * 4 / dailycalories * 100}}%</div>
+                    
+                </div></td>
+            </tr>
+            <tr style="height: 7px">
+                <td bgcolor="#000000"></td>
+            </tr>
+              <!--          <tr>
+                <td>
+                    <table cellspacing="0" cellpadding="0" border="0" class="vitamins">
+                    <tbody>
+                    <tr>
+                        <td>Vitamin A &nbsp;&nbsp; %</td>
+                        <td align="center"></td>
+                        <td align="right">Calcium &nbsp;&nbsp; %</td>
+                    </tr>
+                    <tr>
+                        <td>Vitamin B &nbsp;&nbsp; %</td>
+                        <td align="center"></td>
+                        <td align="right">Iron &nbsp;&nbsp; %</td>
+                    </tr>
+                    <tr>
+                        <td>Vitamin C &nbsp;&nbsp; %</td>
+                        <td align="center"></td>
+                        <td align="right">Potassium &nbsp;&nbsp; %</td>
+                    </tr>
+                    <tr>
+                        <td>Vitamin D &nbsp;&nbsp; 5%</td>
+                        <td align="center"></td>
+                        <td align="right">Folate &nbsp;&nbsp; %</td>
+                    </tr>                        
+                    </tbody></table>
+                </td>
+            </tr> -->
+                        <tr>
+                <td><div class="line">
+                <div class="labellight">* Based on a <a href="#">{{dailycalories}} calorie diet</a>
+                </div>
+                </div>
+                </td>
+            </tr>
+        </tbody></table>
+    </div>
+</md-card>
+
+		  
+		  <!--
+		  <section class="performance-facts">
+  <header class="performance-facts__header">
+    <h6 class="performance-facts__title">{{food.Name}}</h6>
+    <p>Serving Size {{food.Serving_g}}g
+    <p>Serving Per Container </p>
+  </header>
+  <table class="performance-facts__table">
+    <thead>
+      <tr>
+        <th colspan="3" class="small-info">
+          Amount Per Serving
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th colspan="2">
+          <b>Calories</b>
+          {{food.Calories}}
+        </th>
+        <td>
+          Calories from Fat
+          {{food.Fat_g * 9}}
+        </td>
+      </tr>
+      <tr class="thick-row">
+        <td colspan="3" class="small-info">
+          <b>% Daily Value*</b>
+        </td>
+      </tr>
+      <tr>
+        <th colspan="2">
+          <b>Total Fat</b>
+          {{food.Fat_g}}g
+        </th>
+        <td>
+          <b>22%</b>
+        </td>
+      </tr>
+      <tr>
+        <td class="blank-cell">
+        </td>
+        <th>
+          Saturated Fat
+          {{food.Sat_Fat_g}}g
+        </th>
+        <td>
+          <b>%</b>
+        </td>
+      </tr>
+      <tr>
+        <td class="blank-cell">
+        </td>
+        <th>
+          Trans Fat
+          0g
+        </th>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <th colspan="2">
+          <b>Cholesterol</b>
+          {{food.Cholesterol_mg}}mg
+        </th>
+        <td>
+          <b>%</b>
+        </td>
+      </tr>
+      <tr>
+        <th colspan="2">
+          <b>Sodium</b>
+          {{food.Sodium_mg}}mg
+        </th>
+        <td>
+          <b>2%</b>
+        </td>
+      </tr>
+      <tr>
+        <th colspan="2">
+          <b>Total Carbohydrate</b>
+          {{food.Carbohydrate_g}}g
+        </th>
+        <td>
+          <b>6%</b>
+        </td>
+      </tr>
+      <tr>
+        <td class="blank-cell">
+        </td>
+        <th>
+          Dietary Fiber
+          {{food.Fiber_g}}g
+        </th>
+        <td>
+          <b>4%</b>
+        </td>
+      </tr>
+      <tr>
+        <td class="blank-cell">
+        </td>
+        <th>
+          Sugars
+          {{food.Sugar_g}}g
+        </th>
+        <td>
+        </td>
+      </tr>
+      <tr class="thick-end">
+        <th colspan="2">
+          <b>Protein</b>
+          {{food.Protein_g}}g
+        </th>
+        <td>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <table class="performance-facts__table--grid">
+    <tbody>
+      <tr>
+        <td colspan="2">
+          Vitamin A
+          10%
+        </td>
+        <td>
+          Vitamin C
+          0%
+        </td>
+      </tr>
+      <tr class="thin-end">
+        <td colspan="2">
+          Calcium
+          10%
+        </td>
+        <td>
+          Iron
+          6%
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  </section>
+		  -->
+		  
+        </md-list-item>
+</div>  
+    </md-content>
+	
+
+</div>
+
+<!--
+<div layout="column" layout-align="center center" flex>
+  <md-whiteframe class="md-whiteframe-3dp" layout="column" style="margin: 1em; width: 22em; height: 15em;" flex>
+    <div layout="column" flex style="margin-left: 1em;">
+      <h4>Project:</h4>
+      <p style="margin-top: -1em;">Cordova-Angular-AngularMaterial-Seed</p>
+      <h4>Created by:</h4>
+      <p style="margin-top: -1em;">MarioAleo</p>
+    </div>
+    <md-divider></md-divider>
+    <div layout="row" layout-align="space-around center" flex="20">
+      <md-button class="md-icon-button" aria-label="Project" ng-href="https://github.com/mario-aleo/cordova-angular-angularMaterial-seed">
+        <md-icon style="color: #000000">book</md-icon>
+      </md-button>
+      <md-button class="md-icon-button" aria-label="Creator" ng-href="https://github.com/mario-aleo">
+        <md-icon style="color: #000000">favorite</md-icon>
+      </md-button>
+    </div>
+  </md-whiteframe>
+
+  <md-button class="md-fab md-primary" aria-label="Menu">
+    <md-icon>menu</md-icon>
+  </md-button>
+</div>
+-->
