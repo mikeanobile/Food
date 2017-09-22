@@ -1,13 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="info.anobile.food" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="info.anobile.food" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Food</name>
     <description>
-        Food
+        Food is a database of nutrition facts based on USDA data.
     </description>
     <author email="mikeanobile@gmail.com" href="https://mike.anobile.info">
         Mike Anobile
     </author>
     <content src="index.html" />
+	<icon src="logo.png" />
     <plugin name="cordova-plugin-whitelist" version="1" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -29,4 +30,6 @@
     <engine name="android" spec="~5.1.1" />
     <engine name="windows" spec="~4.3.1" />
     <plugin name="cordova-plugin-tesseract-ocr" spec="~0.0.3" />
+	<preference name="orientation" value="portrait" />
+    <preference name="fullscreen" value="true" />
 </widget>
